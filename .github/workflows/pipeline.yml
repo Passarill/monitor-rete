@@ -1,0 +1,19 @@
+name: Pipeline monitor-rete
+
+on: push
+
+jobs:
+  build-e-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scarica il codice
+        uses: actions/checkout@v6
+
+      - name: Controllo del codice Python
+        run: python3 -m py_compile monitor.py
+
+      - name: Build immagine Docker
+        run: docker build -t monitor-rete .
+
+      - name: Esecuzione del container
+        run: docker run monitor-rete
